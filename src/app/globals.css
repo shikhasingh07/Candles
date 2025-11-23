@@ -1,0 +1,154 @@
+/* src/app/globals.css */
+
+/* 1) Google font first */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&display=swap');
+
+/* 2) Tailwind v4 import */
+@import "tailwindcss";
+:root {
+  --logo-font: "Dancing Script", cursive;
+  --brand-yellow: #D9B26A;
+  --brand-paper: #FBF6ED;
+  --brand-green: #13515A;
+
+  /* header height used to size the hero to fit the viewport */
+  --header-height: 96px; /* adjust if your header is taller/shorter */
+}
+
+/* ...existing base rules... */
+
+/* helper responsive title scale using clamp */
+.hero-title {
+  font-weight: 700;
+  line-height: 1.05;
+  /* clamp(min, preferred, max) */
+  font-size: clamp(34px, 6.5vw, 64px);
+}
+
+/* ensure hero text doesn't push layout down */
+.hero-section {
+  min-height: calc(10vh - var(--header-height));
+  display: flex;
+  align-items: center;
+}
+
+/* slightly smaller circle on narrow screens */
+.hero-circle {
+  width: min(44vw, 420px);
+  aspect-ratio: 1 / 1;
+  border-radius: 9999px;
+  position: relative;
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --header-height: 88px;
+  }
+  .hero-circle {
+    width: min(48vw, 360px);
+  }
+}
+@media (max-width: 768px) {
+  .hero-circle {
+    width: min(60vw, 300px);
+  }
+  .hero-title {
+    font-size: clamp(28px, 8.5vw, 48px);
+  }
+}
+
+/* 3) Theme vars */
+:root {
+  --logo-font: "Dancing Script", cursive;
+  --brand-yellow: #D9B26A;  /* header/frame */
+  --brand-paper: #FBF6ED;   /* inner background */
+  --brand-green: #13515A;   /* main text */
+}
+
+/* 4) Base rules */
+@layer base {
+  body {
+    color: var(--brand-green);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial;
+    background-color: var(--brand-yellow);
+  }
+
+  h1, h2, h3, h4 {
+    color: #0f1720;
+  }
+
+  .logo-script {
+    font-family: var(--logo-font);
+  }
+}
+
+/* 5) animations (used in hero) */
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* small helper classes (Tailwind v4 will accept these) */
+.animate-fadeInLeft {
+  animation: fadeInLeft 0.6s ease-out both;
+}
+.animate-fadeInRight {
+  animation: fadeInRight 0.6s ease-out both;
+}
+
+/* ---------------- Animations ---------------- */
+
+@keyframes softFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes softPop {
+  0% {
+    transform: scale(0.97);
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+  }
+  60% {
+    transform: scale(1.02);
+    box-shadow: 0 18px 35px rgba(0,0,0,0.14);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.10);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* helper classes */
+.animate-soft-fade-up {
+  animation: softFadeUp 0.6s ease-out forwards;
+}
+
+.animate-soft-pop {
+  animation: softPop 0.45s ease-out forwards;
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 0.45s ease-out forwards;
+}
