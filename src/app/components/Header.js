@@ -1,21 +1,27 @@
 // src/app/components/Header.js
-"use client";
+"use client"; // 👈 VERY IMPORTANT – must be first line
 
 import React from "react";
 import Link from "next/link";
-import { useCart } from "./CartContext"; // or "./CardContext" depending on your file name
+import { useCart } from "./CartContext"; // or "./CardContext" if that's your filename
 
 export default function Header() {
   const { itemCount, openCart } = useCart();
 
+  // 👇 this prevents hydration mismatch for the badge
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const pillBase =
-    "px-2 py-2 rounded-full shadow-md bg-[var(--brand-yellow)] text-[var(--brand-green)] text-sm font-medium";
+    "px-5 py-2 rounded-full shadow-md bg-[var(--brand-yellow)] text-[var(--brand-green)] text-sm font-medium";
 
   return (
     <header className="bg-[var(--brand-yellow)]">
-      <div className="max-w-6xl mx-auto px-1 md:px-1  pb-4">
+      <div className="max-w-6xl mx-auto pb-2">
         <div className="bg-[var(--brand-paper)] rounded-full flex items-center justify-between px-6 md:px-10 py-4 shadow-md">
-          {/* Logo -> go home */}
+          {/* Logo -> home */}
           <Link
             href="/"
             className="text-2xl tracking-tight text-[var(--brand-green)]"
@@ -37,7 +43,7 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* Right side: email + cart */}
+          {/* Right: email + cart */}
           <div className="flex items-center gap-4">
             <a
               href="mailto:Thewarmwick@gmail.com"
@@ -65,7 +71,8 @@ export default function Header() {
                 <circle cx="17" cy="20" r="1" />
               </svg>
 
-              {itemCount > 0 && (
+              {/* 👇 badge only rendered after mount to avoid hydration error */}
+              {mounted && itemCount > 0 && (
                 <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] rounded-full bg-[#F47B4A] text-white text-[10px] flex items-center justify-center px-0.5">
                   {itemCount}
                 </span>

@@ -27,7 +27,7 @@
 
 /* ensure hero text doesn't push layout down */
 .hero-section {
-  min-height: calc(10vh - var(--header-height));
+  min-height: calc(95vh - var(--header-height));
   display: flex;
   align-items: center;
 }
